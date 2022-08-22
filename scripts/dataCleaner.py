@@ -60,3 +60,10 @@ class dataCleaner():
 
         # Calculate percentage of missing values
         print("The dataset contains", round(((totalMissing/totalCells) * 100), 2), "%", "missing values.")
+
+    def convert_to_datetime(self, df:pd.DataFrame)-> pd.DataFrame:
+        # convert datetime column to datetime
+        self.df = df
+        self.df['start'] = pd.to_datetime(self.df['start'], errors='coerce')
+        self.df['end'] = pd.to_datetime(self.df['end'], errors='coerce')
+        return self.df
