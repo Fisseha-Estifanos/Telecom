@@ -16,5 +16,9 @@ class dataCleaner():
         """
         A function to remove unwanted columns from a DataFrame
         """
-        self.df.drop(cols, axis=1, inplace=True)
-        return self.df
+        try:    
+            self.df.drop(cols, axis=1, inplace=True)
+        except Exception as e:
+            print(e)
+        finally:
+            return self.df
