@@ -64,8 +64,8 @@ class dataCleaner():
     def convert_to_datetime(self, df:pd.DataFrame)-> pd.DataFrame:
         # convert datetime column to datetime
         self.df = df
-        self.df['start'] = pd.to_datetime(self.df['start'], errors='coerce')
-        self.df['end'] = pd.to_datetime(self.df['end'], errors='coerce')
+        self.df['Start'] = pd.to_datetime(self.df['Start'], errors='coerce')
+        self.df['End'] = pd.to_datetime(self.df['End'], errors='coerce')
         return self.df
 
     def fill_na(self, type: str, df: pd.DataFrame, cols: list) -> pd.DataFrame:
