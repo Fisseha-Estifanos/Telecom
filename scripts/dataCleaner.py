@@ -67,3 +67,32 @@ class dataCleaner():
         self.df['start'] = pd.to_datetime(self.df['start'], errors='coerce')
         self.df['end'] = pd.to_datetime(self.df['end'], errors='coerce')
         return self.df
+
+    def fill_na(self, type: str, df: pd.DataFrame, cols: list) -> pd.DataFrame:
+        """
+        A function to fill nulls and undefined data types
+
+        Parameters
+        =--------=
+        type: string
+            The type of the fill. Eg: mode, mean, median
+        df: pd.dataframe
+            The data frame to fill 
+        cols: list
+            The list of columns to be filled
+        """
+        if (type == 'mean'):
+            for col in cols:
+                self.df.col.fillna(value=df.col.mean(), axis=1, inplace=True)
+            return self.df
+        elif (type == 'median'):
+            for col in cols:
+                self.df.col.fillna(value=df.col.median(), axis=1, inplace=True)
+            return self.df
+        elif (type == 'mode'):
+            for col in cols:
+                self.df.col.fillna(value=df.col.mode(), axis=1, inplace=True)
+            return self.df
+        else:
+            print('type must be either mean, median or mode')
+        
