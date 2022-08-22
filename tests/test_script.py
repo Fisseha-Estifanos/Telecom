@@ -8,7 +8,7 @@ from scripts.script import find_average, count_occurrence
 class TestCases(unittest.TestCase):
     def test_find_average(self):
         """
-        Test that it retunrs the average of a given list
+        Test that it returns the average of a given list
         """
         data = [1, 2, 3]
         result = find_average(data)
@@ -21,7 +21,7 @@ class TestCases(unittest.TestCase):
         
         self.assertRaises(TypeError, find_average, True)
 
-class TestCountOccurence(unittest.TestCase):
+class TestCountOccurrence(unittest.TestCase):
     def test_count_occurrence(self):
         """
         Test that it returns the count of each unique values in the given list
