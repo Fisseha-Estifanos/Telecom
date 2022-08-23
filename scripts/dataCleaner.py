@@ -5,12 +5,13 @@ A data cleaner script
 import pandas as pd
 import numpy as np
 
+
 class dataCleaner():
     """
     A data cleaner class
     """
     def __init__(self, df: pd.DataFrame) -> None:
-        self.df = df;
+        self.df = df
         print('Data cleaner in action.')
 
     def remove_unwanted_cols(self, cols: list) -> pd.DataFrame:
@@ -27,7 +28,7 @@ class dataCleaner():
         self.df
             The dataframe rid of the unwanted cols
         """
-        try:    
+        try:
             self.df.drop(cols, axis=1, inplace=True)
         except Exception as e:
             print(e)
@@ -38,7 +39,7 @@ class dataCleaner():
         """
         A function telling how many missing values exist or better still
         what is the % of missing values in the dataset?
-        
+
         Parameters
         =--------=
         df: pandas dataframe
@@ -59,9 +60,10 @@ class dataCleaner():
         totalMissing = missingCount.sum()
 
         # Calculate percentage of missing values
-        print("The dataset contains", round(((totalMissing/totalCells) * 100), 10), "%", "missing values.")
+        print("The dataset contains", round(((totalMissing/totalCells) * 100),
+                                            10), "%", "missing values.")
 
-    def convert_to_datetime(self, df:pd.DataFrame)-> pd.DataFrame:
+    def convert_to_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         # convert datetime column to datetime
         self.df['Start'] = pd.to_datetime(self.df['Start'], errors='coerce')
         self.df['End'] = pd.to_datetime(self.df['End'], errors='coerce')
@@ -76,7 +78,7 @@ class dataCleaner():
         type: string
             The type of the fill. Eg: mode, mean, median
         df: pd.dataframe
-            The data frame to fill 
+            The data frame to fill
         cols: list
             The list of columns to be filled
         """
@@ -94,4 +96,3 @@ class dataCleaner():
             return self.df
         else:
             print('type must be either mean, median or mode')
-        
