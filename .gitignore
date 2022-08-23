@@ -129,5 +129,7 @@ dmypy.json
 .pyre/
 
 # data related
-data/Week1_challenge_data_source.csv
-data/Week1_challenge_data_source_filled.csv.bz2
+data/
+#data/Week1_challenge_data_source.csv
+#data/Week1_challenge_data_source.csv.bz2
+#data/Week1_challenge_data_source_filled.csv.bz2
