@@ -64,12 +64,25 @@ class dataCleaner():
                                             10), "%", "missing values.")
 
     def convert_to_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
-        # convert datetime column to datetime
+        """
+        A function to convert datetime column to datetime
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame to modify
+
+        Returns
+        =-----=
+        self.df: pandas dataframe
+            The modified dataframe
+        """
         self.df['Start'] = pd.to_datetime(self.df['Start'], errors='coerce')
         self.df['End'] = pd.to_datetime(self.df['End'], errors='coerce')
         return self.df
 
-    def fill_na(self, type: str, df: pd.DataFrame, cols: list) -> pd.DataFrame:
+    def fill_na(self, type: str, df: pd.DataFrame, 
+                cols: list) -> pd.DataFrame:
         """
         A function to fill nulls and undefined data types
 
@@ -81,18 +94,26 @@ class dataCleaner():
             The data frame to fill
         cols: list
             The list of columns to be filled
+
+        Returns
+        =-----=
+        self.df: pandas dataframe
+            The modified dataframe
         """
         if (type == 'mean'):
             for col in cols:
-                self.df.col.fillna(value=df.col.mean(), axis=1, inplace=True)
+                self.df.col.fillna(value=df.col.mean(), axis=1,
+                                   inplace=True)
             return self.df
         elif (type == 'median'):
             for col in cols:
-                self.df.col.fillna(value=df.col.median(), axis=1, inplace=True)
+                self.df.col.fillna(value=df.col.median(), axis=1,
+                                   inplace=True)
             return self.df
         elif (type == 'mode'):
             for col in cols:
-                self.df.col.fillna(value=df.col.mode(), axis=1, inplace=True)
+                self.df.col.fillna(value=df.col.mode(), axis=1,
+                                   inplace=True)
             return self.df
         else:
             print('type must be either mean, median or mode')
