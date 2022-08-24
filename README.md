@@ -14,6 +14,7 @@
 - [Test](#test)
 - [Author](#author)
 
+
 ## Introduction
 
 > After a previous interaction completed with a very rich and useful data analysis on a delivery company made for an investor, he is now back for more.
@@ -46,22 +47,28 @@ Data can be found [here at google drive](https://docs.google.com/spreadsheets/d/
 
 And the feature descriptions can be found [also here at google drive](https://docs.google.com/spreadsheets/d/1wY7YZwyZ_r_8xMUe_N2ZQled4RjP0_T6/edit?usp=sharing&ouid=114538742499971442984&rtpof=true&sd=true)
 
+
 ## Notebooks
 
 > All the preprocessing, analysis, EDA and examples of user overview, user engagement, user experience, and user satisfaction analysis implementation will be here in the form of .ipynb file in the notebooks folder.
 
+
 ## Models
 > All the models generated will be found here in the models folder.
+
 
 ## Database
 > All the databases generated will be found here in the databases folder.
 
+
 ## Scripts
 > All the modules for the analysis are found here.
+
 
 ## Tests
 
 > All the unit and integration tests are found here in the tests folder.
+
 
 ## Author
 
@@ -69,6 +76,7 @@ And the feature descriptions can be found [also here at google drive](https://do
 
 - GitHub: [Fisseha Estifanos](https://github.com/fisseha-estifanos)
 - LinkedIn: [Fisseha Estifanos](https://www.linkedin.com/in/fisseha-estifanos-109ba6199/)
+
 
 ## Show us your support
 
