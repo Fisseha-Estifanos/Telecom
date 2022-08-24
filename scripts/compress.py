@@ -1,11 +1,9 @@
-"""
-A script to compress csv files
-"""
+"""A script to compress csv files."""
 
-# imports
+# importing modules
 import pandas as pd
 
-# import the data frame
+# read the data frame
 df = pd.read_csv('../data/Week1_challenge_data_source.csv')
 
 # compress and save the original data set
