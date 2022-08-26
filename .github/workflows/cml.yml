@@ -20,6 +20,7 @@ jobs:
         run: |
           # Post reports as comments in GitHub PRs
           # echo "## Customer cluster and elbow method finding plots" >> report.md
+          # uncomment lines below
           # cml publish plots/3_cluster_scatter.png --md >> report.md
           # cml publish plots/elbow_method.png --md >> report.md
           # cml publish plots/4_cluster_scatter.png --md >> report.md
