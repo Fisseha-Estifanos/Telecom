@@ -236,6 +236,5 @@ class dataCleaner():
         for i in range(cluster_size):
             cluster = df[df[cluster_col]==i]
             print("Cluster " + (i+1) * "I")
-            v = cluster[cols].describe()
-            print(v)
+            print(cluster[cols].describe())
             print("\n")
