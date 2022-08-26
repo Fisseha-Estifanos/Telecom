@@ -162,3 +162,24 @@ class dataCleaner():
         print(f'columns to be filled with mean values: {cols}')
         df[cols] = df[cols].fillna(df[cols].mean())
         return df
+
+    def fix_outlier(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """
+        A function to fix outliers with median
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame containing the outlier columns
+        column: str
+            The string name of the column with the outlier problem 
+
+        Returns
+        =-----=
+        df: pandas data frame
+            The fixed data frame
+        """
+        print(f'column to be filled with median values: {column}')
+        df[column] = np.where(df[column] > df[column].quantile(0.95), df[column].median(),df[column])
+        
+        return df[column]
