@@ -4,6 +4,8 @@ A data cleaner script
 
 import pandas as pd
 import numpy as np
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist
 
 
 class dataCleaner():
@@ -183,3 +185,29 @@ class dataCleaner():
         df[column] = np.where(df[column] > df[column].quantile(0.95), df[column].median(),df[column])
         
         return df[column]
+
+    def choose_k_means(df: pd.DataFrame, num: int):
+        """
+        A function to choose the optimal k means cluster
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame that holds all the values
+        num: integer
+            The x scale
+
+        Returns
+        =-----=
+        distortions and inertias
+        """
+        distortions = []
+        inertias = []
+        K = range(1, num)
+        for k in K:
+            k_means = KMeans(n_clusters=k, random_state=777).fit(df)
+            distortions.append(sum(
+                np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), axis=1)) / df.shape[0])
+            inertias.append(k_means.inertia_)
+
+        return (distortions, inertias)
