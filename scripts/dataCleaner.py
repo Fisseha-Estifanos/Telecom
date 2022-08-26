@@ -186,7 +186,7 @@ class dataCleaner():
         
         return df[column]
 
-    def choose_k_means(df: pd.DataFrame, num: int):
+    def choose_k_means(self, df: pd.DataFrame, num: int):
         """
         A function to choose the optimal k means cluster
 
@@ -211,3 +211,31 @@ class dataCleaner():
             inertias.append(k_means.inertia_)
 
         return (distortions, inertias)
+
+    def computeBasicAnalysisOnClusters(self, df: pd.DataFrame, cluster_col: str , cluster_size: int, cols: list):
+        """
+        A function that gives some basic description of the 3 clusters
+        
+        Parameters
+        =--------=
+        df: pandas data frame
+            The main data frame containing all the data
+        cluster_col: str
+            The column name holding the cluster values
+        cluster_size: integer
+            The number of total cluster groups
+        cols: list
+            The column list on which to provide description
+
+        Returns
+        =-----=
+        None: nothing
+            This function only prints out information
+        """
+        i=0
+        for i in range(cluster_size):
+            cluster = df[df[cluster_col]==i]
+            print("Cluster " + (i+1) * "I")
+            v = cluster[cols].describe()
+            print(v)
+            print("\n")
