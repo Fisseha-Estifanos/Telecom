@@ -4,14 +4,17 @@ A data cleaner script
 
 import pandas as pd
 import numpy as np
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist
 
 
 class dataCleaner():
     """
     A data cleaner class
     """
-    def __init__(self, df: pd.DataFrame) -> None:
-        self.df = df
+    def __init__(self) -> None:
+    #def __init__(self, df: pd.DataFrame) -> None:
+        #self.df = df
         print('Data cleaner in action.')
 
     def remove_unwanted_cols(self, cols: list) -> pd.DataFrame:
@@ -74,12 +77,12 @@ class dataCleaner():
 
         Returns
         =-----=
-        self.df: pandas dataframe
+        df: pandas dataframe
             The modified dataframe
         """
-        self.df['Start'] = pd.to_datetime(self.df['Start'], errors='coerce')
-        self.df['End'] = pd.to_datetime(self.df['End'], errors='coerce')
-        return self.df
+        df['Start'] = pd.to_datetime(df['Start'], errors='coerce')
+        df['End'] = pd.to_datetime(df['End'], errors='coerce')
+        return df
 
     def fill_na(self, type: str, df: pd.DataFrame, 
                 cols: list) -> pd.DataFrame:
@@ -117,3 +120,121 @@ class dataCleaner():
             return self.df
         else:
             print('type must be either mean, median or mode')
+
+    def fillWithMedian(self, df: pd.DataFrame, cols: list) -> pd.DataFrame:
+        """
+        A function that fills null values with their corresponding median 
+        values
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame with the null values
+        cols: list
+            The list of columns to be filled with median values
+
+        Returns
+        =-----=
+        df: pandas data frame
+            The data frame with the null values replace with their
+            corresponding median values
+        """
+        print(f'columns to be filled with median values: {cols}')
+        df[cols] = df[cols].fillna(df[cols].median())
+        return df
+
+    def fillWithMean(self, df: pd.DataFrame, cols: list) -> pd.DataFrame:
+        """
+        A function that fills null values with their corresponding mean 
+        values
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame with the null values
+        cols: list
+            The list of columns to be filled with mean values
+
+        Returns
+        =-----=
+        df: pandas data frame
+            The data frame with the null values replace with their
+            corresponding mean values
+        """
+        print(f'columns to be filled with mean values: {cols}')
+        df[cols] = df[cols].fillna(df[cols].mean())
+        return df
+
+    def fix_outlier(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """
+        A function to fix outliers with median
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame containing the outlier columns
+        column: str
+            The string name of the column with the outlier problem 
+
+        Returns
+        =-----=
+        df: pandas data frame
+            The fixed data frame
+        """
+        print(f'column to be filled with median values: {column}')
+        df[column] = np.where(df[column] > df[column].quantile(0.95), df[column].median(),df[column])
+        
+        return df[column]
+
+    def choose_k_means(self, df: pd.DataFrame, num: int):
+        """
+        A function to choose the optimal k means cluster
+
+        Parameters
+        =--------=
+        df: pandas data frame
+            The data frame that holds all the values
+        num: integer
+            The x scale
+
+        Returns
+        =-----=
+        distortions and inertias
+        """
+        distortions = []
+        inertias = []
+        K = range(1, num)
+        for k in K:
+            k_means = KMeans(n_clusters=k, random_state=777).fit(df)
+            distortions.append(sum(
+                np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), axis=1)) / df.shape[0])
+            inertias.append(k_means.inertia_)
+
+        return (distortions, inertias)
+
+    def computeBasicAnalysisOnClusters(self, df: pd.DataFrame, cluster_col: str , cluster_size: int, cols: list):
+        """
+        A function that gives some basic description of the 3 clusters
+        
+        Parameters
+        =--------=
+        df: pandas data frame
+            The main data frame containing all the data
+        cluster_col: str
+            The column name holding the cluster values
+        cluster_size: integer
+            The number of total cluster groups
+        cols: list
+            The column list on which to provide description
+
+        Returns
+        =-----=
+        None: nothing
+            This function only prints out information
+        """
+        i=0
+        for i in range(cluster_size):
+            cluster = df[df[cluster_col]==i]
+            print("Cluster " + (i+1) * "I")
+            print(cluster[cols].describe())
+            print("\n")
