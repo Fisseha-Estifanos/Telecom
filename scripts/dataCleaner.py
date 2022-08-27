@@ -182,7 +182,8 @@ class dataCleaner():
             The fixed data frame
         """
         print(f'column to be filled with median values: {column}')
-        df[column] = np.where(df[column] > df[column].quantile(0.95), df[column].median(),df[column])
+        df[column] = np.where(df[column] > df[column].quantile(0.95), 
+                              df[column].median(),df[column])
         
         return df[column]
 
@@ -207,12 +208,15 @@ class dataCleaner():
         for k in K:
             k_means = KMeans(n_clusters=k, random_state=777).fit(df)
             distortions.append(sum(
-                np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), axis=1)) / df.shape[0])
+                np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), 
+                             axis=1)) / df.shape[0])
             inertias.append(k_means.inertia_)
 
         return (distortions, inertias)
 
-    def computeBasicAnalysisOnClusters(self, df: pd.DataFrame, cluster_col: str , cluster_size: int, cols: list):
+    def computeBasicAnalysisOnClusters(self, df: pd.DataFrame, 
+                                       cluster_col: str , cluster_size: int,
+                                       cols: list):
         """
         A function that gives some basic description of the 3 clusters
         
