@@ -53,18 +53,22 @@ class dataCleaner():
         None: nothing
             Just prints the missing value percentage
         """
-        # Calculate total number of cells in dataframe
-        totalCells = np.product(df.shape)
+        try:
+            # Calculate total number of cells in dataframe
+            totalCells = np.product(df.shape)
 
-        # Count number of missing values per column
-        missingCount = df.isnull().sum()
+            # Count number of missing values per column
+            missingCount = df.isnull().sum()
 
-        # Calculate total number of missing values
-        totalMissing = missingCount.sum()
+            # Calculate total number of missing values
+            totalMissing = missingCount.sum()
 
-        # Calculate percentage of missing values
-        print("The dataset contains", round(((totalMissing/totalCells) * 100),
-                                            10), "%", "missing values.")
+            # Calculate percentage of missing values
+            print("The dataset contains", round(((totalMissing/totalCells)*
+                                                 100), 10), "%", 
+                                                 "missing values.")
+        except Exception as e:
+            print(e)
 
     def convert_to_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -80,8 +84,11 @@ class dataCleaner():
         df: pandas dataframe
             The modified dataframe
         """
-        df['Start'] = pd.to_datetime(df['Start'], errors='coerce')
-        df['End'] = pd.to_datetime(df['End'], errors='coerce')
+        try:
+            df['Start'] = pd.to_datetime(df['Start'], errors='coerce')
+            df['End'] = pd.to_datetime(df['End'], errors='coerce')
+        except Exception as e:
+            print(e)
         return df
 
     def fill_na(self, type: str, df: pd.DataFrame, 
@@ -103,23 +110,26 @@ class dataCleaner():
         self.df: pandas dataframe
             The modified dataframe
         """
-        if (type == 'mean'):
-            for col in cols:
-                self.df.col.fillna(value=df.col.mean(), axis=1,
-                                   inplace=True)
-            return self.df
-        elif (type == 'median'):
-            for col in cols:
-                self.df.col.fillna(value=df.col.median(), axis=1,
-                                   inplace=True)
-            return self.df
-        elif (type == 'mode'):
-            for col in cols:
-                self.df.col.fillna(value=df.col.mode(), axis=1,
-                                   inplace=True)
-            return self.df
-        else:
-            print('type must be either mean, median or mode')
+        try:
+            if (type == 'mean'):
+                for col in cols:
+                    self.df.col.fillna(value=df.col.mean(), axis=1,
+                                    inplace=True)
+                return self.df
+            elif (type == 'median'):
+                for col in cols:
+                    self.df.col.fillna(value=df.col.median(), axis=1,
+                                    inplace=True)
+                return self.df
+            elif (type == 'mode'):
+                for col in cols:
+                    self.df.col.fillna(value=df.col.mode(), axis=1,
+                                    inplace=True)
+                return self.df
+            else:
+                print('type must be either mean, median or mode')
+        except Exception as e:
+            print(e)
 
     def fillWithMedian(self, df: pd.DataFrame, cols: list) -> pd.DataFrame:
         """
@@ -139,8 +149,11 @@ class dataCleaner():
             The data frame with the null values replace with their
             corresponding median values
         """
-        print(f'columns to be filled with median values: {cols}')
-        df[cols] = df[cols].fillna(df[cols].median())
+        try:
+            print(f'columns to be filled with median values: {cols}')
+            df[cols] = df[cols].fillna(df[cols].median())
+        except Exception as e:
+            print(e)
         return df
 
     def fillWithMean(self, df: pd.DataFrame, cols: list) -> pd.DataFrame:
@@ -161,8 +174,11 @@ class dataCleaner():
             The data frame with the null values replace with their
             corresponding mean values
         """
-        print(f'columns to be filled with mean values: {cols}')
-        df[cols] = df[cols].fillna(df[cols].mean())
+        try:
+            print(f'columns to be filled with mean values: {cols}')
+            df[cols] = df[cols].fillna(df[cols].mean())
+        except Exception as e:
+            print(e)
         return df
 
     def fix_outlier(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
@@ -181,10 +197,12 @@ class dataCleaner():
         df: pandas data frame
             The fixed data frame
         """
-        print(f'column to be filled with median values: {column}')
-        df[column] = np.where(df[column] > df[column].quantile(0.95), 
-                              df[column].median(),df[column])
-        
+        try:
+            print(f'column to be filled with median values: {column}')
+            df[column] = np.where(df[column] > df[column].quantile(0.95),
+                                df[column].median(),df[column])
+        except Exception as e:
+            print(e)
         return df[column]
 
     def choose_k_means(self, df: pd.DataFrame, num: int):
@@ -202,15 +220,18 @@ class dataCleaner():
         =-----=
         distortions and inertias
         """
-        distortions = []
-        inertias = []
-        K = range(1, num)
-        for k in K:
-            k_means = KMeans(n_clusters=k, random_state=777).fit(df)
-            distortions.append(sum(
-                np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), 
-                             axis=1)) / df.shape[0])
-            inertias.append(k_means.inertia_)
+        try:
+            distortions = []
+            inertias = []
+            K = range(1, num)
+            for k in K:
+                k_means = KMeans(n_clusters=k, random_state=777).fit(df)
+                distortions.append(sum(
+                    np.min(cdist(df, k_means.cluster_centers_, 'euclidean'), 
+                                axis=1)) / df.shape[0])
+                inertias.append(k_means.inertia_)
+        except Exception as e:
+            print(e)
 
         return (distortions, inertias)
 
@@ -237,8 +258,11 @@ class dataCleaner():
             This function only prints out information
         """
         i=0
-        for i in range(cluster_size):
-            cluster = df[df[cluster_col]==i]
-            print("Cluster " + (i+1) * "I")
-            print(cluster[cols].describe())
-            print("\n")
+        try:
+            for i in range(cluster_size):
+                cluster = df[df[cluster_col]==i]
+                print("Cluster " + (i+1) * "I")
+                print(cluster[cols].describe())
+                print("\n")
+        except Exception as e:
+            print(e) 
